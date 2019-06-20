@@ -1,44 +1,24 @@
-from config import datasets
+import utils
+from config import datasets, algorithms
 import numpy as np
-import time
 from iforest import IForest
-from sklearn.model_selection import train_test_split
-from sklearn.utils import shuffle
 from sklearn.metrics import roc_auc_score
+from dataset import get_train_test
 
-from sklearn.ensemble import IsolationForest
-
-np.random.seed(1)
-
-scores = []
 for dataset in datasets:
-    X = np.loadtxt("data/" + dataset["file"], delimiter=",")
-    y = np.array([0] * (len(X) - dataset["num_anomalies"]) + [1] * dataset["num_anomalies"])
+    for algorithm in algorithms:
 
-    X, y = shuffle(X, y)
+        utils.reset_random_state()
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)
+        X_train, X_test, y_train, y_test = get_train_test(dataset)
 
-    iForest = IForest(t=100, psi=32)
+        iForest = algorithm()
+        iForest.fit(X_train)
 
-    y_train_pred = iForest.train(X_train)
+        y_train_pred = iForest.predict(X_train)
+        y_test_pred = iForest.predict(X_test)
 
-    y_test_pred = iForest.test(X_test)
+        train_auc = roc_auc_score(y_train, y_train_pred)
+        test_auc = roc_auc_score(y_test, y_test_pred)
 
-    train_auc = roc_auc_score(y_train, y_train_pred)
-    test_auc = roc_auc_score(y_test, y_test_pred)
-
-    print(dataset["name"], train_auc, test_auc)
-
-
-    iForest = IsolationForest(max_samples=32, n_estimators=100)
-    iForest.fit(X_train)
-
-    y_train_pred = -iForest.score_samples(X_train)
-
-    y_test_pred = -iForest.predict(X_test)
-
-    train_auc = roc_auc_score(y_train, y_train_pred)
-    test_auc = roc_auc_score(y_test, y_test_pred)
-
-    print(dataset["name"], train_auc, test_auc)
+        print(iForest.name, dataset["name"], train_auc, test_auc)

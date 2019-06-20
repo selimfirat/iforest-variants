@@ -1,3 +1,7 @@
+from iforest import IForest
+from iforest_pyod import IForestPyOD
+from iforest_sklearn import IForestSklearn
+
 datasets = [
     {
         "name": "madelon",
@@ -24,3 +28,5 @@ datasets = [
         "active": True
     }
 ]
+
+algorithms = [IForest, IForestSklearn, IForestPyOD, ]

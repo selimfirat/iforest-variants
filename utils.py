@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def label_first_N_anomaly(anomaly_scores, N): # N anomalies
 
     mask = np.argsort(-anomaly_scores)[:N]
@@ -9,3 +10,8 @@ def label_first_N_anomaly(anomaly_scores, N): # N anomalies
     y[mask] = 1
 
     return y
+
+
+def reset_random_state():
+
+    np.random.seed(1)

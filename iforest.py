@@ -1,4 +1,5 @@
 import numpy as np
+from base_algorithm import BaseAlgorithm
 
 class ExternalNode:
 
@@ -15,7 +16,9 @@ class InternalNode:
         self.right = right
         self.left = left
 
-class IForest:
+class IForest(BaseAlgorithm):
+
+    name = "iForest"
 
     def __init__(self, t=100, psi=256):
 
@@ -24,11 +27,9 @@ class IForest:
         self.forest = None
 
 
-    def train(self, X):
+    def fit(self, X):
 
         self.forest = self.iForest(X, self.t, self.psi)
-
-        return self.test(X)
 
 
     def anomaly_score(self, x):
@@ -50,7 +51,7 @@ class IForest:
 
         return s
 
-    def test(self, X):
+    def predict(self, X):
 
         anomaly_scores = np.apply_along_axis(self.anomaly_score, axis=1, arr=X)
 
@@ -90,7 +91,13 @@ class IForest:
         # e: current tree height
         # l: height limit
 
-        size = X.shape[0] if len(X.shape) == 2 else 1
+        if len(X.shape) == 2:
+            size = X.shape[0]
+        elif X.shape[0] == 0:
+            size = 0
+        else:
+            size = 1
+
         if e >= l or X.shape[0] <= 1:
             return ExternalNode(size)
 
