@@ -1,24 +1,19 @@
-import utils
-from config import datasets, algorithms
-import numpy as np
-from iforest import IForest
-from sklearn.metrics import roc_auc_score
-from dataset import get_train_test
+import utils, config
 
-for dataset in datasets:
-    for algorithm in algorithms:
+for dataset in config.datasets:
+    for algorithm in config.algorithms:
 
         utils.reset_random_state()
 
-        X_train, X_test, y_train, y_test = get_train_test(dataset)
+        X_train, X_test, y_train, y_test = utils.get_train_test(dataset)
 
-        iForest = algorithm()
-        iForest.fit(X_train)
+        algo = algorithm()
 
-        y_train_pred = iForest.predict(X_train)
-        y_test_pred = iForest.predict(X_test)
+        algo.fit(X_train)
 
-        train_auc = roc_auc_score(y_train, y_train_pred)
-        test_auc = roc_auc_score(y_test, y_test_pred)
+        y_train_pred = algo.predict(X_train)
+        y_test_pred = algo.predict(X_test)
 
-        print(iForest.name, dataset["name"], train_auc, test_auc)
+        stats = utils.calculate_stats(y_train, y_train_pred, y_test, y_test_pred)
+
+        print(dataset["name"], algo.name, stats["train_auc"], stats["train_ap"], stats["test_auc"], stats["test_ap"])
