@@ -1,4 +1,5 @@
 from iforest import IForest
+from iforest_extended import IForestExtended
 from iforest_pyod import IForestPyOD
 from iforest_sklearn import IForestSklearn
 
@@ -29,4 +30,8 @@ datasets = [
     }
 ]
 
-algorithms = [IForest, IForestSklearn, IForestPyOD, ]
+algorithms = [IForest, IForestSklearn, IForestPyOD, IForestExtended]
+
+random_states = [1, 2, 3]
+
+num_cv_splits = 5

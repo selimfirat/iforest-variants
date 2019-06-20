@@ -7,7 +7,7 @@ class IForestSklearn(BaseAlgorithm):
 
     def __init__(self, t=100, psi=256):
 
-        self.iforest = IsolationForest(max_samples=psi, n_estimators=t)
+        self.iforest = IsolationForest(max_samples=psi, n_estimators=t, behaviour="new", contamination="auto")
 
     def fit(self, X):
 

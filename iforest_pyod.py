@@ -7,7 +7,7 @@ class IForestPyOD(BaseAlgorithm):
 
     def __init__(self, t=100, psi=256):
 
-        self.iforest = IForest(max_samples=psi, n_estimators=t)
+        self.iforest = IForest(max_samples=psi, n_estimators=t, behaviour="new", contamination=0.1)
 
     def fit(self, X):
 
