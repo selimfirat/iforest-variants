@@ -1,4 +1,5 @@
 import utils, config
+from tqdm import tqdm
 
 scores = {}
 for dataset in config.datasets:
@@ -11,7 +12,7 @@ for dataset in config.datasets:
 
         splits = utils.get_splits(dataset)
 
-        for X_train, y_train, X_test, y_test in splits:
+        for X_train, y_train, X_test, y_test in tqdm(splits):
 
             for random_state in config.random_states:
 
