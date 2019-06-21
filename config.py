@@ -1,6 +1,7 @@
 from iforest import IForest
 from iforest_extended import IForestExtended
 from iforest_pyod import IForestPyOD
+from iforest_sampledsplitpoint import IForestSampledSplitPoint
 from iforest_sklearn import IForestSklearn
 
 datasets = [
@@ -30,7 +31,7 @@ datasets = [
     }
 ]
 
-algorithms = [IForest, IForestSklearn, IForestPyOD, IForestExtended]
+algorithms = [IForestSampledSplitPoint, IForest, IForestSklearn, IForestPyOD, IForestExtended]
 
 random_states = [1, 2, 3]
 
