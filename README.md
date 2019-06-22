@@ -2,6 +2,12 @@
 
 This repository contains reproducible code of ablation study to research randomization in isolation forest anomaly detection algorithm.
 
+Currently, the repository contains the following isolation forest variants:
+
+* **Isolation Forest** (3 original implementations which are mine, sklearn's, and pyod's.)
+* **Extended Isolation Forest** (See citations section below.)
+* **Isolation Forest which samples an attribute value** instead of choosing randomly as in original version.
+
 ### Requirements
 * Anaconda3
 
